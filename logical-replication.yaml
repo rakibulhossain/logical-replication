@@ -1,0 +1,20 @@
+apiVersion: replication.kubedb.com/v1alpha1
+kind: PgLogicalReplication
+metadata:
+  name: pglogicalreplication-sample
+  namespace: demo
+spec:
+  replicas: 3
+  publisher:
+    name: my_pub
+    databaseName: pub
+    publishAllTables: true 
+    databaseRef:
+      name: demo-pg
+      namespace: demo
+  subscribers:
+    - name: my_sub
+      databaseName: sub
+      databaseRef:
+        name: test-pg
+        namespace: test

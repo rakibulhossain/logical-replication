@@ -1,0 +1,37 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: publisher-db
+  namespace: demo
+spec:
+  version: "11.11"
+  # authSecret:
+  #   name: pg-custom-auth
+  configSecret:
+    name: pg-configuration
+  replicas: 3
+  standbyMode: Hot
+  storageType: Durable
+  # sslMode: verify-full
+  # tls:
+  #   issuerRef:
+  #     apiGroup: cert-manager.io
+  #     name: postgres-issuer
+  #     kind: ClusterIssuer
+  #   certificates:
+  #   - alias: server
+  #     subject:
+  #       organizations:
+  #       - kubedb:server
+  #     dnsNames:
+  #     - localhost
+  #     ipAddresses:
+  #     - "127.0.0.1"
+  storage:
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut

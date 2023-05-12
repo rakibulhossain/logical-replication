@@ -1,0 +1,24 @@
+apiVersion: postgres.kubedb.com/v1alpha1
+kind: Subscriber
+metadata:
+  name: subscriber-one
+  namespace: test
+  labels:
+    replication.kubedb.com/instance_name: subscriber
+spec:
+  name: mysub # subscription namespace
+  serverRef:
+    name: subscriber-db # postgres cluster ref
+  databaseName: sub # database name
+  parameters:
+    tableCreationPolicy: IfNotPresent
+    copyData: false
+    # createSlot: true
+    # enabled: true
+    # connect: true
+  publisher: 
+    managed:
+      namespace: demo
+      refs:
+        - name: publisher-sample
+  deletionPolicy: Delete
